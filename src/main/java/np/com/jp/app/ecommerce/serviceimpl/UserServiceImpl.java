@@ -1,12 +1,15 @@
 package np.com.jp.app.ecommerce.serviceimpl;
 
 import jakarta.transaction.Transactional;
-import np.com.jp.app.ecommerce.controller.RoleRepository;
 import np.com.jp.app.ecommerce.entity.Role;
 import np.com.jp.app.ecommerce.entity.User;
 import np.com.jp.app.ecommerce.exception.UserNotFoundException;
+import np.com.jp.app.ecommerce.repository.RoleRepository;
 import np.com.jp.app.ecommerce.repository.UserRepository;
 import np.com.jp.app.ecommerce.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +21,13 @@ import java.util.Objects;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-//    Boolean check = userEmail == null ? false : true;
+    private Integer pageNumber;
+    //    Boolean check = userEmail == null ? false : true;
 
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
@@ -89,6 +95,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changeEnableStatus(Integer id, Boolean status) {
         userRepository.updateEnabledStatus(id, status);
+    }
+
+    @Override
+    public Page<User> listByPage(Integer pageNumber) {
+        /**
+         * Page number is zero based but here we want to start page number from 1.
+         * We will pagenumber 1 from outside which will be deducted to make 0 based page num.
+         */
+        Pageable pageable = PageRequest.of(pageNumber - 1, DATA_PER_PAGE);
+        return userRepository.findAll(pageable);
     }
 
 

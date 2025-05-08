@@ -1,6 +1,6 @@
 package np.com.jp.app.ecommerce.user;
 
-import np.com.jp.app.ecommerce.controller.RoleRepository;
+import np.com.jp.app.ecommerce.repository.RoleRepository;
 import np.com.jp.app.ecommerce.entity.Role;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

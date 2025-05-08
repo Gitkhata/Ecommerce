@@ -30,3 +30,7 @@ logging:
       ${LOG_FILE_NAME:application.log}
     level:
       root: ${LOGGING_LEVEL:INFO}
+
+# number of items per page
+app:
+  data-per-page: ${DATA_PER_PAGE:10}

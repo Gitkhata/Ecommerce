@@ -6,6 +6,7 @@ import np.com.jp.app.ecommerce.exception.UserNotFoundException;
 import np.com.jp.app.ecommerce.repository.UserRepository;
 import np.com.jp.app.ecommerce.service.UserService;
 import np.com.jp.app.ecommerce.utils.FileUploadUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -30,11 +31,60 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * When users are loaded we want to display only the first by delegating calls to given method.
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/users")
-    public String listAll(Model model) {
-        List<User> listUsers = userService.listAll();
+    public String listByFirstPage(Model model) {
+        Integer pageNumberToStartFrom = 1;
+        return listByPage(pageNumberToStartFrom, model);
+    }
+
+    /**
+     * This method list data by pages.
+     *
+     * @param pageNumber
+     * @param model
+     * @return templates to render users
+     */
+    @GetMapping("/users/page/{pageNumber}")
+    public String listByPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model) {
+        Page<User> page = userService.listByPage(pageNumber);
+        List<User> listUsers = page.getContent();
+
+/*        System.out.println("Page number =  " + pageNumber);
+        System.out.println("Page ize =  " + page.getTotalPages());
+        System.out.println("Total page =  " + page.getTotalPages());*/
+
+
+        /**
+         * Calculates the range of items displayed on the current page of a paginated list
+         * and adds this information to the Model object for rendering in the view.
+         *
+         * - Calculates the start and end indices of items on the current page.
+         * - Ensures the end index does not exceed the total number of items.
+         * - Adds the calculated range and total item count to the Model for use in the view.
+         */
+
+        long startCount = (pageNumber - 1) * UserService.DATA_PER_PAGE + 1;
+        long endCount = startCount + UserService.DATA_PER_PAGE - 1;
+
+        if (endCount > page.getTotalElements()) {
+            endCount = page.getTotalElements();
+        }
+
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("startCount", startCount);
+        model.addAttribute("endCount", endCount);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("listUsers", listUsers);
+
         return "users";
+
     }
 
     @GetMapping("/users/new")
@@ -56,7 +106,7 @@ public class UserController {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             user.setPhotos(fileName);
             User savedUser = userService.save(user);
-            String uploadDIR = "user-image/" + savedUser.getId();
+            String uploadDIR = "user-photos/" + savedUser.getId();
             FileUploadUtils.cleanDir(uploadDIR);
             FileUploadUtils.saveFile(uploadDIR, fileName, multipartFile);
         } else {
@@ -105,4 +155,6 @@ public class UserController {
         redirectAttributes.addFlashAttribute("message", message);
         return "redirect:/users";
     }
+
+
 }
