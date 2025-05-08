@@ -1,0 +1,24 @@
+*.icon-white {
+    color: white;
+}
+
+*.icon-silver {
+    color: silver;
+}
+
+*.icon-green {
+    color: green;
+}
+
+*.icon-dark {
+    color: gray;
+}
+
+*.icon-red {
+    color: red;
+}
+
+.photos {
+    width: 100px;
+    height: 100px;
+}
