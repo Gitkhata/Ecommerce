@@ -1,6 +1,6 @@
-package np.com.jp.app.ecommerce.user;
+package np.com.jp.app.ecommerce.repository;
 
-import np.com.jp.ecommerce.common.entity.User;
+import np.com.jp.app.ecommerce.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

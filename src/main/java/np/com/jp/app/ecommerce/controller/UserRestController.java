@@ -1,5 +1,6 @@
-package np.com.jp.app.ecommerce.user;
+package np.com.jp.app.ecommerce.controller;
 
+import np.com.jp.app.ecommerce.service.UserService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

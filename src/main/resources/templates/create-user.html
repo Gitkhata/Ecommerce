@@ -40,7 +40,8 @@
         <h2>Manage Users | [[${pageTitle}]]</h2>
     </div>
 
-    <form th:action="@{/users/save}" method="post" style="max-width: 900px; margin: 0 auto" enctype="multipart/form-data" th:object="${user}"
+    <form th:action="@{/users/save}" method="post" style="max-width: 900px; margin: 0 auto"
+          enctype="multipart/form-data" th:object="${user}"
           onsubmit="checkUniqueEmail(this);">
         <input th:type="hidden" th:field="*{id}" name="id">
         <div class="border border-secondary rounded p-3">

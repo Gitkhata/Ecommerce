@@ -1,10 +1,11 @@
-package np.com.jp.app.ecommerce.user;
+package np.com.jp.app.ecommerce.controller;
 
-import np.com.jp.ecommerce.admin.FileUploadUtils;
-import np.com.jp.ecommerce.common.entity.Role;
-import np.com.jp.ecommerce.common.entity.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import np.com.jp.app.ecommerce.entity.Role;
+import np.com.jp.app.ecommerce.entity.User;
+import np.com.jp.app.ecommerce.exception.UserNotFoundException;
+import np.com.jp.app.ecommerce.repository.UserRepository;
+import np.com.jp.app.ecommerce.service.UserService;
+import np.com.jp.app.ecommerce.utils.FileUploadUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,7 +22,6 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final UserRepository userRepository;
 

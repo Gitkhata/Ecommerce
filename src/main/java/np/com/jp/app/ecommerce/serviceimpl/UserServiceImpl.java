@@ -1,8 +1,12 @@
-package np.com.jp.app.ecommerce.user;
+package np.com.jp.app.ecommerce.serviceimpl;
 
 import jakarta.transaction.Transactional;
-import np.com.jp.ecommerce.common.entity.Role;
-import np.com.jp.ecommerce.common.entity.User;
+import np.com.jp.app.ecommerce.controller.RoleRepository;
+import np.com.jp.app.ecommerce.entity.Role;
+import np.com.jp.app.ecommerce.entity.User;
+import np.com.jp.app.ecommerce.exception.UserNotFoundException;
+import np.com.jp.app.ecommerce.repository.UserRepository;
+import np.com.jp.app.ecommerce.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 

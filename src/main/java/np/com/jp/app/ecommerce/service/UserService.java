@@ -1,7 +1,9 @@
-package np.com.jp.app.ecommerce.user;
+package np.com.jp.app.ecommerce.service;
 
-import np.com.jp.ecommerce.common.entity.Role;
-import np.com.jp.ecommerce.common.entity.User;
+import np.com.jp.app.ecommerce.entity.Role;
+import np.com.jp.app.ecommerce.entity.User;
+import np.com.jp.app.ecommerce.exception.UserNotFoundException;
+
 
 import java.util.List;
 

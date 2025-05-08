@@ -1,8 +1,9 @@
 package np.com.jp.app.ecommerce.user;
 
 
-import np.com.jp.ecommerce.common.entity.Role;
-import np.com.jp.ecommerce.common.entity.User;
+import np.com.jp.app.ecommerce.entity.Role;
+import np.com.jp.app.ecommerce.entity.User;
+import np.com.jp.app.ecommerce.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

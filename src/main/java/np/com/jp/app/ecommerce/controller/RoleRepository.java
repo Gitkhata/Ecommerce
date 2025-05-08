@@ -1,6 +1,6 @@
-package np.com.jp.app.ecommerce.user;
+package np.com.jp.app.ecommerce.controller;
 
-import np.com.jp.ecommerce.common.entity.Role;
+import np.com.jp.app.ecommerce.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
