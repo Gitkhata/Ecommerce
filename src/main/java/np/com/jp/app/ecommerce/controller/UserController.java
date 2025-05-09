@@ -31,6 +31,11 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    private static String getRedirectUrlToAffectedUser(User user) {
+        String firstPartOfEmail = user.getEmail().split("@")[0];
+        return "redirect:/users/page/1?sortField=id&sortOrder=asc&searchKeyword=" + firstPartOfEmail;
+    }
+
     /**
      * When users are loaded we want to display only the first by delegating calls to given method.
      *
@@ -58,7 +63,7 @@ public class UserController {
     public String listByPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model,
                              @RequestParam(name = "sortField") String sortField,
                              @RequestParam(name = "sortOrder") String sortOrder,
-                             @RequestParam(name = "searchKeyword") String searchKeyword) {
+                             @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 
 
         System.out.println("Sort Field:" + sortField);
@@ -140,7 +145,8 @@ public class UserController {
             userService.save(user);
         }
         redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
-        return "redirect:/users";
+
+        return getRedirectUrlToAffectedUser(user);
     }
 
     @GetMapping("/users/edit/{id}")
