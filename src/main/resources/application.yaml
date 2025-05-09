@@ -17,19 +17,12 @@ spring:
     show-sql: true
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
+      matching-strategy: ant-path-matcher
 
 server:
   port: ${APP_SERVER_PORT:8080}
   servlet:
     context-path: ${ADMIN_BASE_PATH:/app}
-
-logging:
-  file:
-    name:
-      ${LOG_FILE_NAME:application.log}
-    level:
-      root: ${LOGGING_LEVEL:INFO}
 
 # number of items per page
 app:

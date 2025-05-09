@@ -10,6 +10,7 @@ import np.com.jp.app.ecommerce.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,6 @@ import java.util.Objects;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-
 
 
     private final UserRepository userRepository;
@@ -97,13 +97,23 @@ public class UserServiceImpl implements UserService {
         userRepository.updateEnabledStatus(id, status);
     }
 
+
     @Override
-    public Page<User> listByPage(Integer pageNumber) {
+    public Page<User> listByPage(Integer pageNumber, String sortField, String sortOrder) {
+
+        /**
+         * If sortOrder is "asc", it sets the sort direction to ascending.
+         * Otherwise, it sets the sort direction to descending.
+         */
+        Sort sort = Sort.by(sortField);
+        sort = sortOrder.equalsIgnoreCase("asc") ? sort.ascending() : sort.descending();
+        sort = "asc".equalsIgnoreCase(sortOrder) ? sort.ascending() : sort.descending();
+
         /**
          * Page number is zero based but here we want to start page number from 1.
          * We will pagenumber 1 from outside which will be deducted to make 0 based page num.
          */
-        Pageable pageable = PageRequest.of(pageNumber - 1, DATA_PER_PAGE);
+        Pageable pageable = PageRequest.of(pageNumber - 1, DATA_PER_PAGE, sort);
         return userRepository.findAll(pageable);
     }
 

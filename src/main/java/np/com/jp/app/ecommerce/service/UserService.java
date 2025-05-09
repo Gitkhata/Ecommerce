@@ -32,5 +32,5 @@ public interface UserService {
 
     void changeEnableStatus(Integer id, Boolean status);
 
-    Page<User> listByPage(Integer pageNumber);
+    Page<User> listByPage(Integer pageNumber, String sortField, String sortOrder);
 }
