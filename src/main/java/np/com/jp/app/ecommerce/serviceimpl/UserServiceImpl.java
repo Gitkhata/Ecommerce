@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Page<User> listByPage(Integer pageNumber, String sortField, String sortOrder) {
+    public Page<User> listByPage(Integer pageNumber, String sortField, String sortOrder, String searchKeyword) {
 
         /**
          * If sortOrder is "asc", it sets the sort direction to ascending.
@@ -114,6 +114,11 @@ public class UserServiceImpl implements UserService {
          * We will pagenumber 1 from outside which will be deducted to make 0 based page num.
          */
         Pageable pageable = PageRequest.of(pageNumber - 1, DATA_PER_PAGE, sort);
+
+        if (searchKeyword != null) {
+            return userRepository.findAll(searchKeyword, pageable);
+        }
+
         return userRepository.findAll(pageable);
     }
 

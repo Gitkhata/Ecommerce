@@ -44,7 +44,7 @@ public class UserController {
          * firstName --> is the exact field of User entity
          */
 
-        return listByPage(pageNumberToStartFrom, model, "firstName", "asc");
+        return listByPage(pageNumberToStartFrom, model, "firstName", "asc", null);
     }
 
     /**
@@ -55,13 +55,16 @@ public class UserController {
      * @return templates to render users
      */
     @GetMapping("/users/page/{pageNumber}")
-    public String listByPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model, @RequestParam(name = "sortField") String sortField, @RequestParam(name = "sortOrder") String sortOrder) {
+    public String listByPage(@PathVariable(name = "pageNumber") Integer pageNumber, Model model,
+                             @RequestParam(name = "sortField") String sortField,
+                             @RequestParam(name = "sortOrder") String sortOrder,
+                             @RequestParam(name = "searchKeyword") String searchKeyword) {
 
 
         System.out.println("Sort Field:" + sortField);
         System.out.println("Sort Order:" + sortOrder);
 
-        Page<User> page = userService.listByPage(pageNumber, sortField, sortOrder);
+        Page<User> page = userService.listByPage(pageNumber, sortField, sortOrder, searchKeyword);
 
         List<User> listUsers = page.getContent();
 
@@ -96,6 +99,7 @@ public class UserController {
         model.addAttribute("sortOrder", sortOrder);
         model.addAttribute("sortField", sortField);
         model.addAttribute("reverseSortOrder", reverseSortOrder);
+        model.addAttribute("searchKeyword", searchKeyword);
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
